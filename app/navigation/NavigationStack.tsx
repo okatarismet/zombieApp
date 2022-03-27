@@ -13,6 +13,8 @@ import ModuleDevelop from 'app/screens/ModuleDevelop';
 import ThemeController from '../components/ThemeController';
 import { StatusBar } from 'react-native';
 import { ILoginState } from 'app/models/reducers/login';
+import BottomNavigation from './BottomNavigation';
+import Farm from 'app/screens/Farm';
 
 const Stack = createStackNavigator();
 const AuthStack = createStackNavigator();
@@ -80,26 +82,15 @@ const App: React.FC<IProps> = (props: IProps) => {
     <NavigationContainer ref={navigationRef} theme={theme}>
       <StatusBar barStyle={theme.dark ? 'light-content' : 'dark-content'} />
 
-      <Stack.Navigator headerMode="none">
-        {true ? (
-          <Stack.Screen
-            name="ModuleDevelop"
-            component={ModuleDevelop}
-            options={homeOptions}
-          />
-        ) : (
-          <Stack.Screen
-            name="Login"
-            component={AuthNavigator}
-            options={{
-              // When logging out, a pop animation feels intuitive
-              // You can remove this if you want the default 'push' animation
-              animationTypeForReplace: isLoggedIn ? 'push' : 'pop',
-              headerRight: () => <ThemeController />,
-            }}
-          />
-        )}
+      <Stack.Navigator headerMode="none" initialRouteName="Farm">
+        <Stack.Screen
+          name="ModuleDevelop"
+          component={ModuleDevelop}
+          options={homeOptions}
+        />
+        <Stack.Screen name="Farm" component={Farm} options={homeOptions} />
       </Stack.Navigator>
+      <BottomNavigation />
     </NavigationContainer>
   );
 };

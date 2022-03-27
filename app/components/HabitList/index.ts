@@ -1,3 +1,3 @@
 import HabitList from './HabitList';
 
-export { HabitList };
+export default HabitList;

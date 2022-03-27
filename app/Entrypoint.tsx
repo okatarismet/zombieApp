@@ -3,7 +3,7 @@
  * Everything starts from the Entry-point
  */
 import React from 'react';
-import { ActivityIndicator } from 'react-native';
+import { ActivityIndicator, Text } from 'react-native';
 import { Provider, useSelector } from 'react-redux';
 import { PersistGate } from 'redux-persist/es/integration/react';
 import { Provider as PaperProvider } from 'react-native-paper';

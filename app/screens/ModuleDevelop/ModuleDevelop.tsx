@@ -1,53 +1,68 @@
-import React, { useRef, useState } from 'react';
-import { StyleSheet, View } from 'react-native';
-import { Text } from 'react-native-paper';
-import { Canvas, useRender, useFrame } from 'react-three-fiber';
+import React from 'react';
+import { View, Text, StyleSheet } from 'react-native';
+import styled from 'styled-components';
+import { Colors, Sizes } from '../../lib/theme';
 
-// function Box(props) {
-//   // This reference will give us direct access to the mesh
-//   const mesh = useRef();
-
-//   // Set up state for the hovered and active state
-//   const [hovered, setHover] = useState(false);
-//   const [active, setActive] = useState(false);
-
-//   // Rotate mesh every frame, this is outside of React without overhead
-//   useFrame(() => (mesh.current.rotation.x = mesh.current.rotation.y += 0.01));
-
-//   return (
-//     <mesh
-//       {...props}
-//       ref={mesh}
-//       scale={active ? [1.5, 1.5, 1.5] : [1, 1, 1]}
-//       onClick={e => setActive(!active)}
-//       onPointerOver={e => setHover(true)}
-//       onPointerOut={e => setHover(false)}>
-//       <boxBufferGeometry attach="geometry" args={[1, 1, 1]} />
-//       <meshStandardMaterial
-//         attach="material"
-//         color={hovered ? 'hotpink' : 'orange'}
-//       />
-//     </mesh>
-//   );
-// }
-
-export default function App() {
-  return (
-    <View style={styles.container}>
-      <Text style={{ color: 'white', padding: 100 }}>asdfsdaf</Text>
-      <Canvas>
-        <ambientLight />
-        <pointLight position={[10, 10, 10]} />
-        {/* <Box position={[-1.2, 0, 0]} />
-        <Box position={[1.2, 0, 0]} /> */}
-      </Canvas>
-    </View>
-  );
-}
+import { useDispatch } from 'react-redux';
+import * as loginActions from 'app/store/actions/loginActions';
 
 const styles = StyleSheet.create({
   container: {
+    marginTop: Sizes.IOSSafeArea,
+    paddingTop: '20%',
+    paddingBottom: '30%',
     flex: 1,
-    backgroundColor: 'black',
+    flexDirection: 'column',
+    justifyContent: 'space-around',
+    alignItems: 'center',
+    height: '100%',
+    position: 'relative',
+  },
+  midCircle: {
+    position: 'relative',
+    // backgroundColor: 'red',
+    alignItems: 'center',
+    width: '100%',
+    height: '60%',
   },
 });
+
+const TimeText = styled.Text({
+  color: Colors.primaryTextColor,
+  fontSize: Sizes.h1,
+});
+const ModuleNameText = styled.Text({
+  color: Colors.primaryTextColor,
+  fontSize: Sizes.h3,
+});
+const CancelButton = styled.Button({
+  color: Colors.primaryTextColor,
+});
+interface Props {
+  module: {
+    name: string;
+  };
+}
+const ModuleDevelop: React.FC = ({
+  module = { name: 'Engine Part' },
+}: Props) => {
+  const dispatch = useDispatch();
+  const onLogout = () => dispatch(loginActions.logOut());
+
+  return (
+    <View style={styles.container}>
+      <TimeText>44:59</TimeText>
+      {/* <View style={styles.midCircle}>
+        <ModuleNameText>{module.name}</ModuleNameText>
+      </View>
+      <CancelButton
+        icon="logout"
+        mode="outlined"
+        onPress={onLogout}
+        title="Cancel"
+      /> */}
+    </View>
+  );
+};
+
+export default ModuleDevelop;
