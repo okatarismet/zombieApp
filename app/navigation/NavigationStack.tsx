@@ -8,6 +8,7 @@ import { navigationRef } from './NavigationService';
 import Login from 'app/screens/Login';
 import Home from 'app/screens/Home';
 import ForgotPassword from 'app/screens/ForgotPassword';
+import ModuleDevelop from 'app/screens/ModuleDevelop';
 
 import ThemeController from '../components/ThemeController';
 import { StatusBar } from 'react-native';
@@ -80,10 +81,10 @@ const App: React.FC<IProps> = (props: IProps) => {
       <StatusBar barStyle={theme.dark ? 'light-content' : 'dark-content'} />
 
       <Stack.Navigator headerMode="none">
-        {isLoggedIn ? (
+        {true ? (
           <Stack.Screen
-            name="Home"
-            component={LoggedInNavigator}
+            name="ModuleDevelop"
+            component={ModuleDevelop}
             options={homeOptions}
           />
         ) : (
