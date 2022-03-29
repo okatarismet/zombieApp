@@ -1,3 +1,5 @@
 import HabitList from './HabitList';
+import FarmField from './FarmField';
+import AddHabitModule from './AddHabitModule';
 
-export { HabitList };
+export { HabitList, FarmField, AddHabitModule };

@@ -1,9 +1,9 @@
-import React from 'react';
-import { View, Text, StyleSheet } from 'react-native';
+import React, { useState } from 'react';
+import { View, Text, StyleSheet, Modal } from 'react-native';
 import styled from 'styled-components';
 import { Colors, Sizes } from '../../lib/theme';
 
-import { HabitList } from '../../components';
+import { HabitList, FarmField, AddHabitModule } from '../../components';
 
 import { useDispatch } from 'react-redux';
 import * as loginActions from 'app/store/actions/loginActions';
@@ -70,6 +70,14 @@ const AddHabitText = styled.Text({
   color: Colors.primaryTextColor,
   fontSize: Sizes.h5,
 });
+const ModalView = styled.View({
+  backgroundColor: 'white',
+  display: 'flex',
+  flexGrow: 1,
+  width: 'auto',
+  height: 'auto',
+  margin: '50px 20px',
+});
 interface Props {
   module: {
     name: string;
@@ -77,16 +85,25 @@ interface Props {
 }
 const Farm: React.FC = ({ module = { name: 'Engine Part' } }: Props) => {
   const dispatch = useDispatch();
-  const onLogout = () => dispatch(loginActions.logOut());
+  const [modalVisible, setModalVisible] = useState(false);
 
   return (
     <View style={styles.container}>
+      <Modal
+        animationType="slide"
+        transparent={true}
+        visible={modalVisible}
+        onRequestClose={() => {
+          setModalVisible(!modalVisible);
+        }}>
+        <AddHabitModule setModalVisible={setModalVisible} />
+      </Modal>
       <TopResourceBar>
         <ResourceText>Gold 200</ResourceText>
         <ResourceText>Food 400</ResourceText>
       </TopResourceBar>
       <UtilityBar>
-        <AddHabitButton>
+        <AddHabitButton onPress={() => setModalVisible(true)}>
           <Icon
             name={'plus'}
             size={30}
@@ -100,6 +117,7 @@ const Farm: React.FC = ({ module = { name: 'Engine Part' } }: Props) => {
         </AddHabitButton>
       </UtilityBar>
       <HabitList />
+      <FarmField />
     </View>
   );
 };
