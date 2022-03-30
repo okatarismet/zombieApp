@@ -4,5 +4,5 @@ export interface Habit {
   type: 'multiple' | 'single';
   frequency: number;
   combo: number;
-  lastDateCompleted: string;
+  lastDateCompleted: Date;
 }

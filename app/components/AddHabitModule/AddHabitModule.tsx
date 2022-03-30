@@ -33,14 +33,6 @@ const InputField = styled.TextInput({
   width: '50%',
   padding: 10,
 });
-interface Habit {
-  id: number;
-  name: string;
-  type: 'multiple' | 'single';
-  frequency: string;
-  combo: number;
-  lastDateCompleted: string;
-}
 const Button = styled.TouchableOpacity({
   flexDirection: 'row',
   justifyContent: 'center',
@@ -64,11 +56,14 @@ export default function AddHabitModule({ setModalVisible }) {
 
   const AddHabit = () => {
     console.log('UUUIIIDD', uuid.v4());
+    var yesterdayDate = new Date();
+    yesterdayDate.setDate(yesterdayDate.getDate() - 1);
     let habit: Habit = {
-      id: uuid.v4(),
+      _id: uuid.v4(),
       name,
       type: habitType === 'Recurrent' ? 'multiple' : 'single',
       frequency: frequency,
+      lastDateCompleted: yesterdayDate,
     };
     dispatch(addHabit(habit));
     setModalVisible(false);

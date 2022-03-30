@@ -5,6 +5,7 @@ import { Colors, Sizes } from '../../lib/theme';
 
 import { useDispatch, useSelector } from 'react-redux';
 import Icon from 'react-native-vector-icons/AntDesign';
+import { completeHabit } from 'app/store/actions/habitActions';
 
 const RootScrollView = styled.ScrollView({
   height: '5%',
@@ -66,15 +67,26 @@ const Habits: Habit[] = [
     lastDateCompleted: '',
   },
 ];
-const completeTask = (id: number) => {
-  console.log('task with ', id, ' completed');
-  // o habiti tamamla
-  // Gunluk cokca olanlar icin bir yontem dusun.
-  // Gunluk goldu arttirman lazim.
-  // Guzel bir animasyon eklemen lazim.
+
+const isHabitCompleted = e => {
+  var inputDate = new Date(e.lastDateCompleted);
+  var todaysDate = new Date();
+  if (inputDate.setHours(0, 0, 0, 0) == todaysDate.setHours(0, 0, 0, 0)) {
+    return true;
+  }
+  return false;
 };
 export default function HabitList() {
   const habits = useSelector(state => state.habitReducer.habits);
+  const dispatch = useDispatch();
+  const completeTask = (habit: Habit) => {
+    console.log('task with ', habit._id, ' completed');
+    dispatch(completeHabit(habit));
+    // o habiti tamamla
+    // Gunluk cokca olanlar icin bir yontem dusun.
+    // Gunluk goldu arttirman lazim.
+    // Guzel bir animasyon eklemen lazim.
+  };
   React.useEffect(() => console.log(habits));
   return (
     <RootScrollView>
@@ -88,12 +100,17 @@ export default function HabitList() {
           <AddHabitButton
             onPress={() => {
               console.log(habits);
-              completeTask(e.id);
+              completeTask(e);
             }}>
             <Text>{e.name}</Text>
             <ComboBox>
               <ComboBoxText>x {e.combo}</ComboBoxText>
             </ComboBox>
+            {isHabitCompleted(e) && (
+              <Text style={{ color: 'green', paddingRight: 30 }}>
+                Completed
+              </Text>
+            )}
           </AddHabitButton>
         ))}
     </RootScrollView>
