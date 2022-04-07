@@ -117,7 +117,7 @@ const Farm: React.FC = ({ module = { name: 'Engine Part' } }: Props) => {
         </AddHabitButton>
       </UtilityBar>
       <HabitList />
-      <FarmField />
+      {/* <FarmField /> */}
     </View>
   );
 };

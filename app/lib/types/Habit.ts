@@ -1,5 +1,5 @@
 export interface Habit {
-  id: string;
+  _id: string;
   name: string;
   type: 'multiple' | 'single';
   frequency: number;

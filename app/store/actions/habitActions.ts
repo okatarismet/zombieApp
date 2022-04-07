@@ -2,7 +2,7 @@
  * Reducer actions related with navigation
  */
 import Habit from '../../lib/types/Habit';
-import * as types from './types';
+import * as types from '../types';
 import realm from '../../db';
 
 export function addHabit(habit: Habit) {
@@ -31,6 +31,16 @@ export function completeHabit(habit: Habit) {
 
   return {
     type: types.COMPLETE_HABIT,
+    habit,
+  };
+}
+export function deleteHabit(habit: Habit) {
+  realm.write(() =>
+    realm.delete(realm.objects('Habit').filter(e => e._id === habit._id)),
+  );
+
+  return {
+    type: types.DELETE_HABIT,
     habit,
   };
 }

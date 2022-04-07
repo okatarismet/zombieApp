@@ -1,6 +1,11 @@
-import Realm from 'realm';
 import HabitSchema from './schemas/HabitSchema';
 // Create realm
-let realm = new Realm({ schema: [HabitSchema], schemaVersion: 1 });
+let Realm = null;
+
+if (Realm === null) {
+  Realm = require('realm');
+}
+
+let realm = new Realm({ schema: [HabitSchema.schema], schemaVersion: 1 });
 
 export default realm;

@@ -5,6 +5,7 @@ import {
   TouchableOpacity,
   TextInput,
   View,
+  Alert,
 } from 'react-native';
 import styled from 'styled-components';
 import { Colors, Sizes } from '../../lib/theme';
@@ -46,22 +47,27 @@ const Button = styled.TouchableOpacity({
   backgroundColor: Colors.color_5,
   margin: '2%',
 });
-const habitTypes = ['Daily', 'Recurrent'];
+const habitTypes = ['single', 'multiple'];
 
 export default function AddHabitModule({ setModalVisible }) {
   const [name, onChangeName] = React.useState('Useless Text');
   const [habitType, changeHabitType] = React.useState('Daily');
-  const [frequency, setFrequency] = React.useState(1);
+  const [frequency, setFrequency] = React.useState(0);
   const dispatch = useDispatch();
 
   const AddHabit = () => {
-    console.log('UUUIIIDD', uuid.v4());
+    if (habitType === 'multiple' && frequency < 2) {
+      Alert.alert('Warning', 'Frequency must be greater than 1', [
+        { text: 'OK', onPress: () => console.log('OK Pressed') },
+      ]);
+      return;
+    }
     var yesterdayDate = new Date();
     yesterdayDate.setDate(yesterdayDate.getDate() - 1);
     let habit: Habit = {
       _id: uuid.v4(),
       name,
-      type: habitType === 'Recurrent' ? 'multiple' : 'single',
+      type: habitType,
       frequency: frequency,
       lastDateCompleted: yesterdayDate,
     };
@@ -92,11 +98,14 @@ export default function AddHabitModule({ setModalVisible }) {
             return item;
           }}
         />
-        {habitType === 'Recurrent' && (
+        {habitType === 'multiple' && (
           <InputField
             style={{ width: 50 }}
             type="number"
-            onChangeText={setFrequency}
+            onChangeText={text => {
+              const num = parseInt(text.replace(/[^0-9]/g, ''));
+              typeof num === 'number' && setFrequency(num);
+            }}
           />
         )}
       </View>

@@ -1,11 +1,12 @@
 import React from 'react';
-import { ScrollView, Text, TouchableOpacity } from 'react-native';
+import { ScrollView, Text, TouchableOpacity, Alert } from 'react-native';
 import styled from 'styled-components';
 import { Colors, Sizes } from '../../lib/theme';
 
 import { useDispatch, useSelector } from 'react-redux';
 import Icon from 'react-native-vector-icons/AntDesign';
-import { completeHabit } from 'app/store/actions/habitActions';
+import { completeHabit, deleteHabit } from 'app/store/actions/habitActions';
+import { isHabitCompletedToday } from '../../utils/dateUtils';
 
 const RootScrollView = styled.ScrollView({
   height: '5%',
@@ -68,14 +69,6 @@ const Habits: Habit[] = [
   },
 ];
 
-const isHabitCompleted = e => {
-  var inputDate = new Date(e.lastDateCompleted);
-  var todaysDate = new Date();
-  if (inputDate.setHours(0, 0, 0, 0) == todaysDate.setHours(0, 0, 0, 0)) {
-    return true;
-  }
-  return false;
-};
 export default function HabitList() {
   const habits = useSelector(state => state.habitReducer.habits);
   const dispatch = useDispatch();
@@ -88,6 +81,12 @@ export default function HabitList() {
     // Guzel bir animasyon eklemen lazim.
   };
   React.useEffect(() => console.log(habits));
+  const longPress = (habit: Habit) => {
+    Alert.alert('Delete Habit', 'Do you want to delete this habit?', [
+      { text: 'Yes', onPress: () => dispatch(deleteHabit(habit)) },
+      { text: 'No', onPress: () => console.log('No Pressed') },
+    ]);
+  };
   return (
     <RootScrollView>
       {/* <AddHabitButton
@@ -101,12 +100,15 @@ export default function HabitList() {
             onPress={() => {
               console.log(habits);
               completeTask(e);
-            }}>
+            }}
+            onLongPress={() => longPress(e)}
+            delayLongPress={1000}
+            disabled={isHabitCompletedToday(e)}>
             <Text>{e.name}</Text>
             <ComboBox>
               <ComboBoxText>x {e.combo}</ComboBoxText>
             </ComboBox>
-            {isHabitCompleted(e) && (
+            {isHabitCompletedToday(e) && (
               <Text style={{ color: 'green', paddingRight: 30 }}>
                 Completed
               </Text>

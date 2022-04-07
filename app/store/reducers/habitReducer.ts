@@ -3,7 +3,7 @@
  * handles login states in the app
  */
 import createReducer from 'app/lib/createReducer';
-import * as types from 'app/store/actions/types';
+import * as types from '../types';
 
 import { IHabitState } from 'app/models/reducers/habit';
 
@@ -25,6 +25,13 @@ export const habitReducer = createReducer(initialState, {
     };
   },
   [types.COMPLETE_HABIT](state: IHabitState, action: IAddHabitState) {
+    // console.log('habitReducer.js addHabit', action);
+    return {
+      ...state,
+      habits: syncHabits(),
+    };
+  },
+  [types.DELETE_HABIT](state: IHabitState, action: IAddHabitState) {
     // console.log('habitReducer.js addHabit', action);
     return {
       ...state,
