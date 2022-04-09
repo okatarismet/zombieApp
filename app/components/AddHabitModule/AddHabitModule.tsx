@@ -68,7 +68,8 @@ export default function AddHabitModule({ setModalVisible }) {
       _id: uuid.v4(),
       name,
       type: habitType,
-      frequency: frequency,
+      multiple_goal: frequency,
+      multiple_completed_today: 0,
       lastDateCompleted: yesterdayDate,
     };
     dispatch(addHabit(habit));

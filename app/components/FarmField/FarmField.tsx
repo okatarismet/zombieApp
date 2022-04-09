@@ -12,15 +12,6 @@ const RootScrollView = styled.ScrollView({
   backgroundColor: 'red',
   // margin: 100,
 });
-
-interface Habit {
-  id: number;
-  name: string;
-  type: 'multiple' | 'single';
-  frequency: string;
-  combo: number;
-  lastDateCompleted: string;
-}
 export default function FarmField() {
   return (
     <RootScrollView>

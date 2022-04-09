@@ -2,7 +2,7 @@ import React from 'react';
 import { ScrollView, Text, TouchableOpacity, Alert } from 'react-native';
 import styled from 'styled-components';
 import { Colors, Sizes } from '../../lib/theme';
-
+import { Habit } from '../../lib/types';
 import { useDispatch, useSelector } from 'react-redux';
 import Icon from 'react-native-vector-icons/AntDesign';
 import { completeHabit, deleteHabit } from 'app/store/actions/habitActions';
@@ -42,33 +42,6 @@ const ComboBoxText = styled.Text({
   color: 'white',
 });
 
-interface Habit {
-  id: number;
-  name: string;
-  type: 'multiple' | 'single';
-  frequency: string;
-  combo: number;
-  lastDateCompleted: string;
-}
-const Habits: Habit[] = [
-  {
-    id: 1,
-    name: 'Morning Abs',
-    type: 'single',
-    frequency: 'daily', // Daily oldugunda numara oluyor
-    combo: 1,
-    lastDateCompleted: '',
-  },
-  {
-    id: 2,
-    name: 'Water Drinking',
-    type: 'multiple',
-    frequency: '8',
-    combo: 1,
-    lastDateCompleted: '',
-  },
-];
-
 export default function HabitList() {
   const habits = useSelector(state => state.habitReducer.habits);
   const dispatch = useDispatch();
@@ -95,7 +68,7 @@ export default function HabitList() {
         }}></AddHabitButton> */}
       {habits &&
         habits.length > 0 &&
-        habits.map((e, i) => (
+        habits.map((e: Habit, i) => (
           <AddHabitButton
             onPress={() => {
               console.log(habits);
@@ -107,6 +80,11 @@ export default function HabitList() {
             <Text>{e.name}</Text>
             <ComboBox>
               <ComboBoxText>x {e.combo}</ComboBoxText>
+
+              <ComboBoxText>x {e.multiple_goal}</ComboBoxText>
+            </ComboBox>
+            <ComboBox>
+              <ComboBoxText>x {e.multiple_completed_today}</ComboBoxText>
             </ComboBox>
             {isHabitCompletedToday(e) && (
               <Text style={{ color: 'green', paddingRight: 30 }}>
