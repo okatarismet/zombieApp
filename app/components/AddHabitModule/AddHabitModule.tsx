@@ -67,7 +67,7 @@ export default function AddHabitModule({ setModalVisible }) {
     let habit: Habit = {
       _id: uuid.v4(),
       name,
-      type: habitType,
+      variant: habitType,
       multiple_goal: frequency,
       multiple_completed_today: 0,
       lastDateCompleted: yesterdayDate,

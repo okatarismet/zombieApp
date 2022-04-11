@@ -14,7 +14,7 @@ export function addHabit(habit: Habit) {
     newHabit = realm.create('Habit', {
       _id: habit._id,
       name: habit.name,
-      type: habit.type,
+      variant: habit.variant,
       multiple_goal: habit.multiple_goal,
       multiple_completed_today: 0,
       combo: 0,
@@ -35,34 +35,37 @@ export function completeHabit(habit: Habit) {
   //<MULTIPLE MODULE>
   console.log('VIZYONSUZ SALAK');
   console.log(habitFound);
-  console.log(habitFound.type);
-  // if (habitFound.type === 'multiple') {
-  if (true) {
-    // if (habitFound.multiple_goal !== habitFound.multiple_completed_today) {
-    // realm.write(() => {
-    //   habitFound.multiple_completed_today += 1;
-    // });
-    return;
-  } // Tamamlanmis ise yani bugunku hedef, devam et ve combolari duzenle.
-  // }
-  //</MULTIPLE MODULE>
+  console.log(habitFound.variant);
+  if (habitFound.variant === 'multiple') {
+    console.log('MULTIPLE');
+    realm.write(() => {
+      habitFound.multiple_completed_today += 1;
+    });
+    if (habitFound.multiple_goal !== habitFound.multiple_completed_today) {
+      return {
+        type: types.COMPLETE_HABIT,
+        habit: habitFound,
+      };
+    } // Tamamlanmis ise yani bugunku hedef, devam et ve combolari duzenle.
+  }
+  // </MULTIPLE MODULE>
   // <COMBO MODULES>
-  // let habitFoundDate = new Date(habitFound.lastDateCompleted);
-  // let yesterday = new Date();
-  // yesterday.setDate(yesterday.getDate() - 1);
-  // if (habitFoundDate.setHours(0, 0, 0, 0) == yesterday.setHours(0, 0, 0, 0)) {
-  //   combo_applicable = true;
-  // }
-  // // </ COMBO MODULES>
-  // realm.write(() => {
-  //   habitFound.lastDateCompleted = new Date();
-  //   habitFound.combo = combo_applicable ? habitFound.combo + 1 : 0;
-  // });
+  let habitFoundDate = new Date(habitFound.lastDateCompleted);
+  let yesterday = new Date();
+  yesterday.setDate(yesterday.getDate() - 1);
+  if (habitFoundDate.setHours(0, 0, 0, 0) == yesterday.setHours(0, 0, 0, 0)) {
+    combo_applicable = true;
+  }
+  // </ COMBO MODULES>
+  realm.write(() => {
+    habitFound.lastDateCompleted = new Date();
+    habitFound.combo = combo_applicable ? habitFound.combo + 1 : 0;
+  });
 
-  // return {
-  //   type: types.COMPLETE_HABIT,
-  //   habitFound,
-  // };
+  return {
+    type: types.COMPLETE_HABIT,
+    habit: habitFound,
+  };
 }
 export function deleteHabit(habit: Habit) {
   realm.write(() =>

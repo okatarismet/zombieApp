@@ -5,7 +5,7 @@ HabitSchema.schema = {
   properties: {
     _id: 'string',
     name: 'string',
-    type: 'string',
+    variant: 'string',
     multiple_goal: 'int',
     multiple_completed_today: 'int',
     combo: 'int',
