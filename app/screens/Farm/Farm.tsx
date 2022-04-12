@@ -5,7 +5,7 @@ import { Colors, Sizes } from '../../lib/theme';
 
 import { HabitList, FarmField, AddHabitModule } from '../../components';
 
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import * as loginActions from 'app/store/actions/loginActions';
 import Icon from 'react-native-vector-icons/AntDesign';
 
@@ -86,6 +86,7 @@ interface Props {
 const Farm: React.FC = ({ module = { name: 'Engine Part' } }: Props) => {
   const dispatch = useDispatch();
   const [modalVisible, setModalVisible] = useState(false);
+  const goods = useSelector(state => state.goodsReducer.goods);
 
   return (
     <View style={styles.container}>
@@ -99,8 +100,8 @@ const Farm: React.FC = ({ module = { name: 'Engine Part' } }: Props) => {
         <AddHabitModule setModalVisible={setModalVisible} />
       </Modal>
       <TopResourceBar>
-        <ResourceText>Gold 200</ResourceText>
-        <ResourceText>Food 400</ResourceText>
+        <ResourceText>{goods.gold}</ResourceText>
+        <ResourceText>{goods.food}</ResourceText>
       </TopResourceBar>
       <UtilityBar>
         <AddHabitButton onPress={() => setModalVisible(true)}>
