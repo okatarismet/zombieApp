@@ -6,6 +6,7 @@ import { Habit } from '../../lib/types';
 import { useDispatch, useSelector } from 'react-redux';
 import Icon from 'react-native-vector-icons/AntDesign';
 import { completeHabit, deleteHabit } from 'app/store/actions/habitActions';
+import { syncGoods } from '../../store/actions/goodsActions';
 import { isHabitCompletedToday } from '../../utils/dateUtils';
 
 const AddHabitButton = styled.TouchableOpacity({
@@ -54,6 +55,7 @@ export default function HabitComponent({ habit, key }: Props) {
   const dispatch = useDispatch();
   const completeTask = (habit: Habit) => {
     dispatch(completeHabit(habit));
+    dispatch(syncGoods());
   };
   const longPress = (habit: Habit) => {
     Alert.alert('Delete Habit', 'Do you want to delete this habit?', [

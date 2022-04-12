@@ -17,3 +17,7 @@ export const LOG_OUT = 'LOG_OUT';
 export const ADD_HABIT = 'ADD_HABIT';
 export const COMPLETE_HABIT = 'COMPLETE_HABIT';
 export const DELETE_HABIT = 'DELETE_HABIT';
+
+//goods
+
+export const SYNC_GOODS = 'SYNC_GOODS';

@@ -1,4 +1,4 @@
-export interface Habit {
+export interface Goods {
   _id: string;
   gold: number;
   food: number;

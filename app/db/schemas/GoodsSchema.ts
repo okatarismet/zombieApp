@@ -4,9 +4,10 @@ GoodsSchema.schema = {
   name: 'Goods',
   properties: {
     _id: 'string',
-    gold: 'number',
-    food: 'number',
-    population: 'number',
+    gold: 'int',
+    food: 'int',
+    population: 'int',
+    habitFoodConstant: 'int',
   },
   primaryKey: '_id',
 };

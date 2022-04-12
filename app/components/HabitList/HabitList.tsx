@@ -9,7 +9,7 @@ import { useDispatch, useSelector } from 'react-redux';
 const RootScrollView = styled.ScrollView({
   height: '5%',
   width: '100%',
-  backgroundColor: 'white',
+  // backgroundColor: 'white',
   // margin: 100,
 });
 

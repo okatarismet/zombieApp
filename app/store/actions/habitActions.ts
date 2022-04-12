@@ -1,9 +1,10 @@
 /*
  * Reducer actions related with navigation
  */
-import { Habit } from '../../lib/types/Habit';
+import { Habit, Goods } from '../../lib/types';
 import * as types from '../types';
 import realm from '../../db';
+import { habitCompleted as habitCompletedGoods } from '../../utils/goodsUtils';
 
 export function addHabit(habit: Habit) {
   console.log('habitActions.js, addHabit');
@@ -28,11 +29,13 @@ export function addHabit(habit: Habit) {
   };
 }
 export function completeHabit(habit: Habit) {
+  habitCompletedGoods(habit);
   let combo_applicable = false;
   let habitFound: Habit = realm
     .objects('Habit')
     .filtered('_id == $0', habit._id)[0];
   //<MULTIPLE MODULE>
+
   if (habitFound.variant === 'multiple') {
     realm.write(() => {
       habitFound.multiple_completed_today += 1;
