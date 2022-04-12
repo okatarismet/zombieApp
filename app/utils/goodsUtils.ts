@@ -5,15 +5,6 @@ import { useDispatch, useSelector } from 'react-redux';
 
 export const habitCompleted = (habit: Habit) => {
   let goods: Goods = realm.objects('Goods')[0];
-  goods = realm.write(() => {
-    realm.create('Goods', {
-      _id: '001',
-      gold: 0,
-      food: 0,
-      population: 1,
-      habitFoodConstant: 50,
-    });
-  });
 
   let habitFound: Habit = realm
     .objects('Habit')

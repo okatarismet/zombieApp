@@ -28,7 +28,6 @@ const RootNavigation: React.FC = () => {
   const isDark = useSelector((state: IState) => state.themeReducer.isDark);
   const paperTheme = isDark ? PaperThemeDark : PaperThemeDefault;
   const combinedTheme = isDark ? CombinedDarkTheme : CombinedDefaultTheme;
-
   return (
     <PaperProvider theme={paperTheme}>
       <Navigator theme={combinedTheme} />
