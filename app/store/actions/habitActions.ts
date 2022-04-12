@@ -33,11 +33,7 @@ export function completeHabit(habit: Habit) {
     .objects('Habit')
     .filtered('_id == $0', habit._id)[0];
   //<MULTIPLE MODULE>
-  console.log('VIZYONSUZ SALAK');
-  console.log(habitFound);
-  console.log(habitFound.variant);
   if (habitFound.variant === 'multiple') {
-    console.log('MULTIPLE');
     realm.write(() => {
       habitFound.multiple_completed_today += 1;
     });
