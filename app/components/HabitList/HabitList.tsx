@@ -3,10 +3,8 @@ import { ScrollView, Text, TouchableOpacity, Alert } from 'react-native';
 import styled from 'styled-components';
 import { Colors, Sizes } from '../../lib/theme';
 import { Habit } from '../../lib/types';
+import HabitComponent from '../HabitComponent';
 import { useDispatch, useSelector } from 'react-redux';
-import Icon from 'react-native-vector-icons/AntDesign';
-import { completeHabit, deleteHabit } from 'app/store/actions/habitActions';
-import { isHabitCompletedToday } from '../../utils/dateUtils';
 
 const RootScrollView = styled.ScrollView({
   height: '5%',
@@ -14,84 +12,16 @@ const RootScrollView = styled.ScrollView({
   backgroundColor: 'white',
   // margin: 100,
 });
-const AddHabitButton = styled.TouchableOpacity({
-  flexDirection: 'row',
-  justifyContent: 'space-between',
-  display: 'flex',
-  flexGrow: 1,
-  alignItems: 'center',
-  width: 'auto',
-  height: '70',
-  borderRadius: '100',
-  backgroundColor: Colors.color_5,
-  margin: '2%',
-  paddingLeft: '8%',
-});
-
-const ComboBox = styled.View({
-  height: 50,
-  width: 50,
-  backgroundColor: Colors.color_4,
-  borderRadius: 100,
-  marginRight: 'auto',
-  justifyContent: 'center',
-  alignItems: 'center',
-});
-
-const ComboBoxText = styled.Text({
-  color: 'white',
-});
 
 export default function HabitList() {
   const habits = useSelector(state => state.habitReducer.habits);
-  const dispatch = useDispatch();
-  const completeTask = (habit: Habit) => {
-    console.log('task with ', habit._id, ' completed');
-    dispatch(completeHabit(habit));
-    // o habiti tamamla
-    // Gunluk cokca olanlar icin bir yontem dusun.
-    // Gunluk goldu arttirman lazim.
-    // Guzel bir animasyon eklemen lazim.
-  };
-  React.useEffect(() => console.log(habits));
-  const longPress = (habit: Habit) => {
-    Alert.alert('Delete Habit', 'Do you want to delete this habit?', [
-      { text: 'Yes', onPress: () => dispatch(deleteHabit(habit)) },
-      { text: 'No', onPress: () => console.log('No Pressed') },
-    ]);
-  };
+
   return (
     <RootScrollView>
-      {/* <AddHabitButton
-        onPress={() => {
-          console.log(habits);
-        }}></AddHabitButton> */}
       {habits &&
         habits.length > 0 &&
-        habits.map((e: Habit, i) => (
-          <AddHabitButton
-            onPress={() => {
-              console.log(habits);
-              completeTask(e);
-            }}
-            onLongPress={() => longPress(e)}
-            delayLongPress={1000}
-            disabled={isHabitCompletedToday(e)}>
-            <Text>{e.name}</Text>
-            <ComboBox>
-              <ComboBoxText>x {e.combo}</ComboBoxText>
-
-              <ComboBoxText>x {e.multiple_goal}</ComboBoxText>
-            </ComboBox>
-            <ComboBox>
-              <ComboBoxText>x {e.multiple_completed_today}</ComboBoxText>
-            </ComboBox>
-            {isHabitCompletedToday(e) && (
-              <Text style={{ color: 'green', paddingRight: 30 }}>
-                Completed
-              </Text>
-            )}
-          </AddHabitButton>
+        habits.map((habit: Habit, i) => (
+          <HabitComponent habit={habit} key={i} />
         ))}
     </RootScrollView>
   );
