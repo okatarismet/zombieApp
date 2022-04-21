@@ -1,3 +1,3 @@
-import Farm from './Farm';
+import Farm from './Farm2';
 
 export default Farm;
